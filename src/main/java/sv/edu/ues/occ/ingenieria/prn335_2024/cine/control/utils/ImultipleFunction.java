@@ -12,7 +12,7 @@ public interface ImultipleFunction<T> {
 
             return find(init, max,null,null);
         }catch (Exception e){
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"problemas al obtener lista d eobjecto",e);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"problemas al obtener lista de objeto",e);
         }
         return List.of();
     }
@@ -22,7 +22,7 @@ public interface ImultipleFunction<T> {
 
             return find(init, max,campo,orden);
         }catch (Exception e){
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"problemas al obtener lista d eobjecto",e);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE,"problemas al obtener lista de objeto",e);
         }
 
         return List.of();

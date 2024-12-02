@@ -53,7 +53,7 @@ public abstract class AbstractFrm<T> implements Serializable {
         Logger.getLogger(AbstractFrm.class.getName()).log(Level.INFO, "iniciando registro");
         this.modelo= new LazyDataModel<T>(){
 
-            //se indica cuantas filas tiene el entity atravas del metod count
+            //se indica cuantas filas tiene el entity atraves del metodo count
             @Override
             public int count(Map<String, FilterMeta> map) {
                 AbstractDataPersistence<T> clBean = getAbstractDataPersistence();
@@ -66,7 +66,7 @@ public abstract class AbstractFrm<T> implements Serializable {
                 return result;
             }
 
-            //se cargarn elelmetos de acuerdo al findrabge
+            //se cargan elementos de acuerdo al findRange
             @Override
             public List<T> load(int init, int max, Map<String, SortMeta> map, Map<String, FilterMeta> map1) {
 
@@ -156,7 +156,7 @@ public abstract class AbstractFrm<T> implements Serializable {
             clBean = getAbstractDataPersistence();
             modificado = clBean.update(registro);
             if (modificado != null) {
-                //notificar que se elimino3
+                //notificar que se modificó
                 mensaje.setSeverity(FacesMessage.SEVERITY_INFO);
                 mensaje.setSummary("registro modificado");
                 getFC().addMessage(null,mensaje);

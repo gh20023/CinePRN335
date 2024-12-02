@@ -8,6 +8,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "sala", schema = "public")
+@NamedQueries({
+        @NamedQuery(name = "Sala.findByIdTipoSala", query = "SELECT s FROM SalaCaracteristica sc JOIN sc.idSala s WHERE sc.idTipoSala.idTipoSala = :idTipoSala GROUP BY s.idSala ORDER BY s.nombre ASC")
+})
 public class Sala implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

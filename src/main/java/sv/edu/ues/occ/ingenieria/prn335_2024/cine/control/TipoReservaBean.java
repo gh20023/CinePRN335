@@ -4,19 +4,19 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity.TipoSala;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity.TipoReserva;
 
 import java.io.Serializable;
 
 @Stateless
 @LocalBean
-public class TipoSalaBean extends AbstractDataPersistence<TipoSala> implements Serializable {
+public class TipoReservaBean extends AbstractDataPersistence<TipoReserva> implements Serializable {
 
-    @PersistenceContext(name = "CinePU")
+    @PersistenceContext(unitName = "CinePU")
     EntityManager em;
 
-    public TipoSalaBean() {
-        super(TipoSala.class);
+    public TipoReservaBean() {
+        super(TipoReserva.class);
     }
 
     @Override

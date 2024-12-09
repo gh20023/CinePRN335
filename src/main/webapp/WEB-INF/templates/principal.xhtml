@@ -52,6 +52,13 @@
                 <p:dialog header="Carrito de Compras" widgetVar="dlgCarrito" modal="true"
                           showEffect="fade" hideEffect="fade" resizable="false">
                     <h:form id="frmVerCarrito">
+                        <p:panelGrid>
+                            <p:outputLabel for="nombre" value="Nombre: " />
+                            <p:inputText id="nombre" value="#{frmCarrito.clienteNombre}"/>
+
+                            <p:outputLabel for="dui" value="DUI: " />
+                            <p:inputText id="dui" value="#{frmCarrito.clienteDui}"/>
+                        </p:panelGrid>
                         <p:dataTable value="#{frmCarrito.carrito}" var="item" rows="5" paginator="true">
                             <p:column headerText="ID">
                                 <h:outputText value="#{item.idProducto}"/>
@@ -68,9 +75,14 @@
                                                  update=":frmVerCarrito"/>
                             </p:column>
                         </p:dataTable>
-                        <p:commandButton value="Vaciar Carrito"
-                                         actionListener="#{frmCarrito.limpiarCarrito}"
-                                         update=":frmVerCarrito"/>
+                        <p:panelGrid>
+                            <p:commandButton value="Vaciar Carrito"
+                                             actionListener="#{frmCarrito.limpiarCarrito}"
+                                             update=":frmVerCarrito"/>
+                            <p:commandButton value="Realizar Compra"
+                                             actionListener="#{frmCarrito.realizarCompra()}"
+                                             update=":frmVerCarrito"/>
+                        </p:panelGrid>
                     </h:form>
                 </p:dialog>
             </div>

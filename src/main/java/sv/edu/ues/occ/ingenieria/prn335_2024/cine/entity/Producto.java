@@ -28,6 +28,10 @@ public class Producto implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
+    //Se agregó una cantidad para los productos
+    @Transient
+    private Integer cantidad = 1;
+
     public Producto() {}
 
     public Producto(Long idProducto){this.idProducto = idProducto;}
@@ -72,4 +76,11 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
 }

@@ -17,7 +17,7 @@
 
 <h:body>
     <div class="ui-g">
-        <p:growl id="growl" showDetail="true" sticky="false" life="1500" />
+        <p:growl id="growl" showDetail="true" sticky="false" life="1500"/>
         <!--menu-->
         <div class="ui-g-12 ui-md-2">
             <h:form id="frmMenuPrincipal">
@@ -38,16 +38,47 @@
                                 <c:ajax execute="@form" render="@all"/>
                             </p:selectOneMenu>
                             <p:commandButton type="button" icon="pi pi-user" styleClass="mr-2"/>
+
+                            <!-- Botón para abrir el carrito -->
+                            <p:commandButton type="button" icon="pi pi-shopping-cart"
+                                             value="Carrito"
+                                             styleClass="mr-2"
+                                             onclick="PF('dlgCarrito').show();"/>
                         </h:form>
                     </p:toolbarGroup>
                 </p:toolbar>
+
+                <!-- Dialogo para mostrar el carrito -->
+                <p:dialog header="Carrito de Compras" widgetVar="dlgCarrito" modal="true"
+                          showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form id="frmVerCarrito">
+                        <p:dataTable value="#{frmCarrito.carrito}" var="item" rows="5" paginator="true">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{item.idProducto}"/>
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{item.nombre}"/>
+                            </p:column>
+                            <p:column headerText="Cantidad">
+                                <h:outputText value="#{item.cantidad}"/>
+                            </p:column>
+                            <p:column headerText="Acciones">
+                                <p:commandButton value="Quitar"
+                                                 actionListener="#{frmCarrito.quitarDelCarrito(item)}"
+                                                 update=":frmVerCarrito"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Vaciar Carrito"
+                                         actionListener="#{frmCarrito.limpiarCarrito}"
+                                         update=":frmVerCarrito"/>
+                    </h:form>
+                </p:dialog>
             </div>
 
             <div class="ui-g-12">
                 <div class="ui-g-12">
                     <h1>
                         <f:insert name="titulo">
-                            <!--@elvariable id="msg" type="java.util.Map"-->
                             <h:outputText value="#{msg['abstrasctpffrm.create']}" />
                         </f:insert>
                     </h1>
@@ -56,7 +87,6 @@
                     <div class="ui-g-12" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                         <h1>
                             <f:insert name="cuerpo">
-                                <!--@elvariable id="msg" type="java.util.Map"-->
                                 <h:outputText value="#{msg['abstrasctpffrm.cancel']}" />
                             </f:insert>
                         </h1>

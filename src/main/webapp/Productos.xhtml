@@ -9,7 +9,6 @@
    </f:define>
    <f:define name="cuerpo">
       <h:panelGrid>
-         <!-- Panel para mostrar tipos de producto -->
          <h:panelGroup id="pnlTabla">
             <h:form id="frmTabla">
                <p:dataTable value="#{frmTipoProducto.modelo}" var="r"
@@ -29,9 +28,10 @@
             </h:form>
          </h:panelGroup>
       </h:panelGrid>
-      <!-- Panel para mostrar productos-->
+
       <h:panelGroup id="pnlDetalle">
-         <h:form rendered="#{not empty frmTipoProducto.productos}" id="frmDetalle">
+         <h:form id="frmDetalle" rendered="#{not empty frmTipoProducto.productos}">
+            <p:outputLabel value="Agregue productos a su carrito:"/>
             <p:dataTable value="#{frmTipoProducto.productos}" var="pr"
                          rowKey="#{pr.idProducto}"
                          lazy="true"
@@ -43,8 +43,20 @@
                <p:column headerText="NOMBRE"><h:outputText value="#{pr.nombre}"/></p:column>
                <p:column headerText="ACTIVO"><h:outputText value="#{pr.activo ? 'ACTIVO' : 'INACTIVO'}"/></p:column>
                <p:column headerText="DESCRIPCION"><h:outputText value="#{pr.descripcion}"/></p:column>
+               <!-- Spinner para seleccionar una cantidad entre 1 y 10 -->
+               <p:column headerText="Cantidad">
+                  <p:spinner value="#{pr.cantidad}" min="1" max="10" stepFactor="1" size="3"/>
+               </p:column>
+               <!-- Botón carrito -->
+               <p:column headerText="Acciones">
+                  <p:commandButton value="Agregar al Carrito"
+                                   actionListener="#{frmTipoProducto.agregarProductoAlCarrito(pr)}"
+                                   update=":frmVerCarrito :growl">
+                  </p:commandButton>
+               </p:column>
             </p:dataTable>
          </h:form>
       </h:panelGroup>
+
    </f:define>
 </f:composition>

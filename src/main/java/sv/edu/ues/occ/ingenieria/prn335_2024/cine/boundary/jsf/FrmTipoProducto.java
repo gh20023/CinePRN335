@@ -29,6 +29,9 @@ public class FrmTipoProducto extends AbstractFrm<TipoProducto> implements Serial
     ProductoBean productoBean;
 
     @Inject
+    FrmCarrito frmCarrito;
+
+    @Inject
     FacesContext fc;
 
     private List<Producto> productos;
@@ -76,7 +79,6 @@ public class FrmTipoProducto extends AbstractFrm<TipoProducto> implements Serial
         TipoProducto tipoProductoSelected = event.getObject();
         FacesMessage mensaje = new FacesMessage("Tipo de producto seleccionado", tipoProductoSelected.getNombre());
         fc.addMessage(null, mensaje);
-
         // Cargar productos basados en el tipo seleccionado
         this.productos = productoBean.findProductosByIdTP(tipoProductoSelected.getIdTipoProducto());
         this.estado = ESTADO_CRUD.PRODUCTOS; // Cambiar estado a PRODUCTOS
@@ -84,6 +86,12 @@ public class FrmTipoProducto extends AbstractFrm<TipoProducto> implements Serial
 
     public List<Producto> getProductos() {
         return productos;
+    }
+
+    // Método para agregar un producto al carrito
+    public void agregarProductoAlCarrito(Producto producto) {
+        frmCarrito.agregarAlCarrito(producto);
+        fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Producto Agregado", producto.getNombre() + " ha sido agregado al carrito"));
     }
 
     @Override

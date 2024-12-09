@@ -62,7 +62,7 @@ public class FrmMenu implements Serializable {
                 .build();
 
         DefaultMenuItem ProductosItem = DefaultMenuItem.builder()
-                .value("Productos")
+                .value("Comprar Productos")
                 .ajax(true)
                 .command("#{frmMenu.navegar('Productos.jsf')}")
                 .build();

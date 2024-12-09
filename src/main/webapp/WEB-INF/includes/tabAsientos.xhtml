@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:composition xmlns="http://www.w3.org/1999/xhtml"
+               xmlns:h="jakarta.faces.html"
+               xmlns:f="jakarta.faces.facelets"
+               xmlns:f2="jakarta.faces.core"
+               xmlns:p="http://primefaces.org/ui"
+               xmlns:crud="jakarta.faces.composite/crud" >
+
+   <p:tab title="Asientos" disabled="#{frmSala.estado!='MODIFICAR'}">
+      <h:panelGrid>
+         <h:panelGroup id="pnlTablaA">
+            <h:form id="frmTablaA">
+               <h:panelGrid>
+                  <p:dataTable value="#{frmSala.frmAsiento.modelo}" var="rA"
+                               lazy="true"
+                               paginator="true"
+                               rows="#{frmSala.frmAsiento.registroPorPagina}"
+                               first="0"
+                               selectionMode="single"
+                               selection="#{frmSala.frmAsiento.registro}"
+                               rendered="#{empty frmSala.frmAsiento.registro}">
+
+                     <p:ajax process="@this" update=":tabDetalle:pnlDetalleA :tabDetalle:pnlTablaA @form"
+                             event="rowSelect" listener="#{frmSala.frmAsiento.selecionarFila}"/>
+                     <p:column headerText="ID">
+                        <h:outputText value="#{rA.idAsiento}"/>
+                     </p:column>
+                     <p:column headerText="Nombre">
+                        <h:outputText value="#{rA.nombre}"/>
+                     </p:column>
+                  </p:dataTable>
+               </h:panelGrid>
+               <h:panelGrid>
+                  <crud:botonesTop frm="#{frmSala.frmAsiento}"
+                                   actualizar=":tabDetalle:pnlDetalleA :tabDetalle:pnlTablaA @form"/>
+               </h:panelGrid>
+            </h:form>
+         </h:panelGroup>
+
+
+         <h:panelGroup id="pnlDetalleA">
+            <h:panelGrid rendered="#{frmSala.frmAsiento.estado!='NINGUNO'}">
+               <h:form id="frmDetalleA">
+                  <h:panelGrid>
+                     <h:panelGrid columns="2">
+                        <p:outputLabel value="ID" for="txtIdAsiento"/>
+                        <p:inputText id="txtIdAsiento" disabled="true" readonly="true"
+                                     value="#{frmSala.frmAsiento.registro.idAsiento}"/>
+
+                        <p:outputLabel value="Nombre" for="txtNombre"/>
+                        <p:inputTextarea id="txtNombre" value="#{frmSala.frmAsiento.registro.nombre}"
+                                         rows="3" cols="70"/>
+
+
+                     </h:panelGrid>
+                     <h:panelGrid columns="#{frmSala.frmAsiento.estado=='CREAR'?'1':'2'}">
+                        <p:commandButton value="GUARDAR" rendered="#{frmSala.frmAsiento.estado=='CREAR'}" update=":tabDetalle:pnlDetalleA :tabDetalle:pnlTablaA @form" actionListener="#{frmSala.frmAsiento.btnGuardarHandler}"/>
+                        <p:commandButton value="MODIFICAR" rendered="#{frmSala.frmAsiento.estado=='MODIFICAR'}" update=":tabDetalle:pnlDetalleA :tabDetalle:pnlTablaA @form" actionListener="#{frmSala.frmAsiento.btnModificarHandler}"/>
+                        <p:commandButton value="ELIMINAR" rendered="#{frmSala.frmAsiento.estado=='MODIFICAR'}" update=":tabDetalle:pnlDetalleA :tabDetalle:pnlTablaA @form" actionListener="#{frmSala.frmAsiento.btneEliminarHandler}"/>
+                     </h:panelGrid>
+
+                  </h:panelGrid>
+               </h:form>
+            </h:panelGrid>
+
+            <h:panelGroup id="pnlTablaAC" rendered="#{frmSala.frmAsiento.estado=='MODIFICAR'}">
+               <h:form id="frmTablaAC">
+                  <div class="card">
+                     <h5>Horizontal</h5>
+                     <p:splitter style="height: 300px; width: 1000px" styleClass="mb-5" widgetVar="splitter">
+                        <!-- Panel 1 -->
+                        <p:splitterPanel styleClass="flex align-items-center justify-content-center">
+                           <h5>Basic</h5>
+                           <div class="col-12 md:col-6 lg:col-4 xl:col-3">
+                              <p:selectOneListbox id="basic" value="#{frmAsiento.frmAsientoCaracteristica.idTipoAsientoSeleccionado}">
+                                 <f2:selectItems value="#{frmAsiento.frmAsientoCaracteristica.tipoAsientoList}"
+                                                 var="tA"
+                                                 itemLabel="#{tA.nombre} + #{tA.idTipoAsiento}"
+                                                 itemValue="#{tA.idTipoAsiento}" />
+                                 <p:ajax update="frmTablaAC:panel2"
+                                         listener="#{frmAsiento.frmAsientoCaracteristica.selecionarFila}" />
+                              </p:selectOneListbox>
+                           </div>
+                        </p:splitterPanel>
+
+                        <!-- Panel 2 -->
+                        <p:splitterPanel styleClass="flex align-items-center justify-content-center" id="panel2">
+                           <p:panelGrid>
+                              <h:form id="frmCarcteristica">
+                                 <p:panelGrid>
+                                    <p:outputLabel value="ID" for="txtId" />
+                                    <p:inputText id="txtIdAsienoCaracteristica"
+                                                 disabled="true"
+                                                 readonly="true"/>
+
+                                    <p:outputLabel value="Valor" for="txtId" />
+                                    <p:inputText id="txtIdAsientoValor" />
+                                 </p:panelGrid>
+                              </h:form>
+                           </p:panelGrid>
+                        </p:splitterPanel>
+                     </p:splitter>
+                  </div>
+               </h:form>
+            </h:panelGroup>
+         </h:panelGroup>
+      </h:panelGrid>
+   </p:tab>
+</f:composition>

@@ -38,6 +38,9 @@ public class Sala implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "idSala")
     public List<SalaCaracteristica> salaCaracteristicaList;
 
+    @OneToMany(mappedBy = "idSala", fetch = FetchType.LAZY)
+    private List<Programacion> programacionList;
+
     public Sala() {}
 
     public Sala(Integer idSala){this.idSala = idSala;}
@@ -96,5 +99,13 @@ public class Sala implements Serializable {
 
     public void setSalaCaracteristicaList(List<SalaCaracteristica> salaCaracteristicaList) {
         this.salaCaracteristicaList = salaCaracteristicaList;
+    }
+
+    public List<Programacion> getProgramacionList() {
+        return programacionList;
+    }
+
+    public void setProgramacionList(List<Programacion> programacionList) {
+        this.programacionList = programacionList;
     }
 }

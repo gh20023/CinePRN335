@@ -17,9 +17,8 @@
                       required="false"
                       displayName="componentes a actualizar"
                       shortDescription="define el area a refresacar"
-
-
         />
+
         <cc:implementation>
             <h:panelGrid columns="#{cc.attrs.frm.estado!='NINGUNO'?'2':'1'}">
                 <p:commandButton value="CANCELAR" rendered="#{cc.attrs.frm.estado ne 'NINGUNO'}" update="#{cc.attrs.actualizar}" actionListener="#{cc.attrs.frm.btnCancelarHandler}"/>
@@ -27,6 +26,5 @@
             </h:panelGrid>
         </cc:implementation>
     </cc:interface>
-
 
 </ui:component>

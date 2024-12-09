@@ -1,5 +1,7 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.control;
 
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -11,6 +13,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Stateless
+@LocalBean
 public class SalaBean extends AbstractDataPersistence<Sala> implements Serializable {
 
     @PersistenceContext(unitName = "CinePU")
@@ -40,7 +44,6 @@ public class SalaBean extends AbstractDataPersistence<Sala> implements Serializa
                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
            }
         }
-
         return Collections.emptyList();
     }
 }

@@ -1,11 +1,18 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity;
 
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "sala_caracteristica", schema = "public")
+@XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "SalaCaracteristica.findAll", query = "SELECT s FROM SalaCaracteristica s"),
+        @NamedQuery(name = "SalaCaracteristica.findByIdSala", query = "SELECT sc FROM SalaCaracteristica sc WHERE sc.idSala.idSala = :idSalaCaracteristica ORDER BY sc.idSalaCaracteristica asc"),
+        @NamedQuery(name = "SalaCaracteristica.countByIdPelicula", query ="SELECT COUNT (sc.idSalaCaracteristica) FROM SalaCaracteristica sc WHERE sc.idSala.idSala = :idSala"),
+        @NamedQuery(name = "SalaCaracteristica.findByValor", query = "SELECT s FROM SalaCaracteristica s WHERE s.valor = :valor")})
 public class SalaCaracteristica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

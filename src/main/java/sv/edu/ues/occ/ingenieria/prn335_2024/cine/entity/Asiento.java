@@ -2,11 +2,20 @@ package sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "asiento", schema = "public")
+@XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "Asiento.findAll", query = "SELECT a FROM Asiento a"),
+        @NamedQuery(name = "Sala.countByIdSala", query = "SELECT COUNT (pc.idAsiento) FROM Asiento pc WHERE pc.idSala.idSala = :idSala"),
+        @NamedQuery(name="Asiento.findByIdSala", query  ="SELECT sc FROM Asiento sc WHERE sc.idSala.idSala = :idSala ORDER BY sc.idAsiento asc"),
+        @NamedQuery(name = "Asiento.findByIdAsiento", query = "SELECT a FROM Asiento a WHERE a.idAsiento = :idAsiento"),
+        @NamedQuery(name = "Asiento.findByNombre", query = "SELECT a FROM Asiento a WHERE a.nombre = :nombre"),
+        @NamedQuery(name = "Asiento.findByActivo", query = "SELECT a FROM Asiento a WHERE a.activo = :activo")})
 public class Asiento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

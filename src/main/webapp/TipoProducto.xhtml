@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:composition xmlns="http://www.w3.org/1999/xhtml"
+               xmlns:h="jakarta.faces.html"
+               xmlns:f="jakarta.faces.facelets"
+               xmlns:p="http://primefaces.org/ui"
+               xmlns:crud="jakarta.faces.composite/crud"
+               template="WEB-INF/templates/principal.xhtml">
+
+   <f:define name="titulo">
+      #{frmTipoProducto.paginaNombre()}
+   </f:define>
+
+   <f:define name="cuerpo">
+      <h:panelGrid>
+         <h:panelGroup id="pnlTabla">
+            <h:form id="frmTabla">
+               <p:dataTable value="#{frmTipoProducto.modelo}" var="r"
+                            lazy="true"
+                            paginator="true"
+                            rows="5"
+                            first="0"
+                            selectionMode="single"
+                            selection="#{frmTipoProducto.registro}"
+                            rendered="#{empty frmTipoProducto.registro}">
+                  <p:ajax process="@this" update=":pnlDetalle @form" event="rowSelect" listener="#{frmTipoProducto.selecionarFila}"/>
+                  <p:column headerText="ID"><h:outputText value="#{r.idTipoProducto}"/></p:column>
+                  <p:column headerText="NOMBRE"><h:outputText value="#{r.nombre}"/></p:column>
+                  <p:column headerText="ACTIVO"><h:outputText value="#{r.activo ? 'ACTIVO' : 'INACTIVO'}"/></p:column>
+                  <p:column headerText="COMENTARIOS"><h:outputText value="#{r.comentarios}"/></p:column>
+               </p:dataTable>
+               <crud:botonesTop frm="#{frmTipoProducto}" />
+               <p:growl id="growl" showDetail="true" sticky="false" life="1500" />
+            </h:form>
+         </h:panelGroup>
+      </h:panelGrid>
+
+      <h:panelGroup id="pnlDetalle">
+         <h:form rendered="#{not empty frmTipoProducto.registro}" id="frmDetalle">
+            <h:panelGrid columns="2">
+               <p:outputLabel value="ID" for="txtid"/>
+               <p:inputText id="txtid" value="#{frmTipoProducto.registro.idTipoProducto}" readonly="true" disabled="true"/>
+
+               <p:outputLabel value="Nombre" for="txtNombre"/>
+               <p:inputText id="txtNombre" value="#{frmTipoProducto.registro.nombre}" size="70"/>
+
+               <p:outputLabel value="Activo" for="chkActivo"/>
+               <p:selectBooleanCheckbox id="chkActivo" value="#{frmTipoProducto.registro.activo}" size="70"/>
+
+               <p:outputLabel value="Comentarios" for="txtComentarios"/>
+               <p:inputText id="txtComentarios" value="#{frmTipoProducto.registro.comentarios}" size="70"/>
+            </h:panelGrid>
+            <h:panelGrid columns="#{frmTipoProducto.estado == 'CREAR' ? '1' : '2'}">
+               <p:commandButton value="GUARDAR" rendered="#{frmTipoProducto.estado == 'CREAR'}" update=":frmTabla :pnlDetalle @form" actionListener="#{frmTipoProducto.btnGuardarHandler}"/>
+               <p:commandButton value="MODIFICAR" rendered="#{frmTipoProducto.estado == 'MODIFICAR'}" update=":frmTabla :pnlDetalle @form" actionListener="#{frmTipoProducto.btnModificarHandler}"/>
+               <p:commandButton value="ELIMINAR" rendered="#{frmTipoProducto.estado == 'MODIFICAR'}" update=":frmTabla :pnlDetalle @form" actionListener="#{frmTipoProducto.btneEliminarHandler}"/>
+            </h:panelGrid>
+         </h:form>
+      </h:panelGroup>
+   </f:define>
+</f:composition>

@@ -1,11 +1,19 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity;
 
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "asiento_caracteristica", schema = "public")
+@XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "AsientoCaracteristica.findAll", query = "SELECT a FROM AsientoCaracteristica a"),
+        @NamedQuery(name = "AsientoCaracteristica.findByIdAsiento", query = "SELECT pc FROM AsientoCaracteristica pc WHERE pc.idAsiento.idAsiento = :idAsiento order by pc.idAsientoCaracteristica asc"),
+        @NamedQuery(name = "AsientoCaracteristica.countByIdAsiento", query = "SELECT COUNT (pc.idAsientoCaracteristica) FROM AsientoCaracteristica pc WHERE pc.idAsiento.idAsiento = :idAsiento"),
+        @NamedQuery(name = "AsientoCaracteristica.findByIdAsientoCaracteristica", query = "SELECT a FROM AsientoCaracteristica a WHERE a.idAsientoCaracteristica = :idAsientoCaracteristica"),
+        @NamedQuery(name = "AsientoCaracteristica.findByValor", query = "SELECT a FROM AsientoCaracteristica a WHERE a.valor = :valor")})
 public class AsientoCaracteristica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

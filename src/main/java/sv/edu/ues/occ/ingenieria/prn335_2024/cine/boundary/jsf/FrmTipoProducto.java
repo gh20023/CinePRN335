@@ -7,21 +7,31 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.primefaces.event.SelectEvent;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.control.AbstractDataPersistence;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.control.ProductoBean;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.control.TipoProductoBean;
+import sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity.Producto;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity.Sala;
 import sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity.TipoProducto;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named
 @ViewScoped
 public class FrmTipoProducto extends AbstractFrm<TipoProducto> implements Serializable {
+
     @Inject
     TipoProductoBean tpBean;
+
+    @Inject
+    ProductoBean productoBean;
+
     @Inject
     FacesContext fc;
+
+    private List<Producto> productos;
 
     @Override
     public void instanciarRegistro() {
@@ -63,10 +73,17 @@ public class FrmTipoProducto extends AbstractFrm<TipoProducto> implements Serial
 
     @Override
     public void selecionarFila(SelectEvent<TipoProducto> event) {
-        TipoProducto tipoProductoSelected = (TipoProducto) event.getObject();
+        TipoProducto tipoProductoSelected = event.getObject();
         FacesMessage mensaje = new FacesMessage("Tipo de producto seleccionado", tipoProductoSelected.getNombre());
         fc.addMessage(null, mensaje);
-        this.estado = ESTADO_CRUD.MODIFICAR;
+
+        // Cargar productos basados en el tipo seleccionado
+        this.productos = productoBean.findProductosByIdTP(tipoProductoSelected.getIdTipoProducto());
+        this.estado = ESTADO_CRUD.PRODUCTOS; // Cambiar estado a PRODUCTOS
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
     }
 
     @Override

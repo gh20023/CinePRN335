@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "tipo_producto", schema = "public")
@@ -23,6 +24,9 @@ public class TipoProducto implements Serializable {
     @Lob
     @Column(name = "comentarios")
     private String comentarios;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "idTipoProducto")
+    public List<Producto> productoList;
 
     public TipoProducto() {}
 
@@ -60,4 +64,11 @@ public class TipoProducto implements Serializable {
         this.comentarios = comentarios;
     }
 
+    public List<Producto> getProductoList() {
+        return productoList;
+    }
+
+    public void setProductoList(List<Producto> productoList) {
+        this.productoList = productoList;
+    }
 }

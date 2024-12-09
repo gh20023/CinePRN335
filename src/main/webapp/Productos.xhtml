@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:composition xmlns="http://www.w3.org/1999/xhtml"
+               xmlns:h="jakarta.faces.html"
+               xmlns:f="jakarta.faces.facelets"
+               xmlns:p="http://primefaces.org/ui"
+               template="WEB-INF/templates/principal.xhtml">
+   <f:define name="titulo">
+      Productos
+   </f:define>
+   <f:define name="cuerpo">
+      <h:panelGrid>
+         <!-- Panel para mostrar tipos de producto -->
+         <h:panelGroup id="pnlTabla">
+            <h:form id="frmTabla">
+               <p:dataTable value="#{frmTipoProducto.modelo}" var="r"
+                            lazy="true"
+                            paginator="true"
+                            rows="5"
+                            first="0"
+                            selectionMode="single"
+                            selection="#{frmTipoProducto.registro}">
+                  <p:ajax process="@this" update=":pnlDetalle @form" event="rowSelect" listener="#{frmTipoProducto.selecionarFila}"/>
+                  <p:column headerText="ID"><h:outputText value="#{r.idTipoProducto}"/></p:column>
+                  <p:column headerText="NOMBRE"><h:outputText value="#{r.nombre}"/></p:column>
+                  <p:column headerText="ACTIVO"><h:outputText value="#{r.activo ? 'ACTIVO' : 'INACTIVO'}"/></p:column>
+                  <p:column headerText="COMENTARIOS"><h:outputText value="#{r.comentarios}"/></p:column>
+               </p:dataTable>
+               <p:growl id="growl" showDetail="true" sticky="false" life="1500" />
+            </h:form>
+         </h:panelGroup>
+      </h:panelGrid>
+      <!-- Panel para mostrar productos-->
+      <h:panelGroup id="pnlDetalle">
+         <h:form rendered="#{not empty frmTipoProducto.productos}" id="frmDetalle">
+            <p:dataTable value="#{frmTipoProducto.productos}" var="pr"
+                         rowKey="#{pr.idProducto}"
+                         lazy="true"
+                         paginator="true"
+                         rows="5"
+                         first="0"
+                         selectionMode="single">
+               <p:column headerText="ID"><h:outputText value="#{pr.idProducto}"/></p:column>
+               <p:column headerText="NOMBRE"><h:outputText value="#{pr.nombre}"/></p:column>
+               <p:column headerText="ACTIVO"><h:outputText value="#{pr.activo ? 'ACTIVO' : 'INACTIVO'}"/></p:column>
+               <p:column headerText="DESCRIPCION"><h:outputText value="#{pr.descripcion}"/></p:column>
+            </p:dataTable>
+         </h:form>
+      </h:panelGroup>
+   </f:define>
+</f:composition>

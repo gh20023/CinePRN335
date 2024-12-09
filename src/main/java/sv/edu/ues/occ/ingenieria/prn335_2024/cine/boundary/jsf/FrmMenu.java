@@ -61,6 +61,12 @@ public class FrmMenu implements Serializable {
                 .command("#{frmMenu.navegar('Reserva.jsf')}") // Producto navigation logic
                 .build();
 
+        DefaultMenuItem ProductosItem = DefaultMenuItem.builder()
+                .value("Productos")
+                .ajax(true)
+                .command("#{frmMenu.navegar('Productos.jsf')}")
+                .build();
+
         // Menu items tipos
         DefaultMenuItem pagoTipo = DefaultMenuItem.builder()
                 .value("Pago")
@@ -106,11 +112,12 @@ public class FrmMenu implements Serializable {
         tipos.getElements().add(productoTipo);
         tipos.getElements().add(reservaTipo);
         tipos.getElements().add(salaTipo);
-        //Tipos
+        //Items
         cineclasi.getElements().add(PeliculaItem);
         cineclasi.getElements().add(SucursalItem);
         cineclasi.getElements().add(SalaItem);
         cineclasi.getElements().add(ReservaItem);
+        cineclasi.getElements().add(ProductosItem);
 
         model.getElements().add(tipos);
         model.getElements().add(cineclasi);

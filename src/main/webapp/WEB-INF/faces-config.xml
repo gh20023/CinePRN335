@@ -10,8 +10,8 @@
             <supported-locale>en</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>message</base-name>
-            <var>msg</var>
+            <base-name>Traduciones</base-name>
+            <var>abstrasctpffrm</var>
         </resource-bundle>
     </application>
 </faces-config>

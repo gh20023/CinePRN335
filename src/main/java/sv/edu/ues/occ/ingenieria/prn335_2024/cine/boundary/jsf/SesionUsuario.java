@@ -44,9 +44,9 @@ public class SesionUsuario implements Serializable {
     }
 
     public void CambiarIdioma(ValueChangeEvent event){
-        idiomaSelecionado = event.getNewValue().toString();
+        String idioma = event.getNewValue().toString();
         for (Map.Entry<String,Locale> entry : idiomas.entrySet()) {
-            if (entry.getKey().equals(idiomaSelecionado)) {
+            if (entry.getKey().equals(idioma)) {
                 facesContext.getViewRoot().setLocale(entry.getValue());
             }
         }

@@ -50,16 +50,16 @@
             <p:tabView rendered="#{not empty frmFactura.registro and not empty frmFactura.registro.facturaDetalleProductoList}">
                <p:tab title="Factura">
                   <h:panelGrid columns="2">
-                     <h:outputLabel value="ID:" />
-                     <h:outputText value="#{frmFactura.registro.idFactura}"/>
-                     <h:outputLabel value="Cliente:" />
-                     <h:outputText value="#{frmFactura.registro.cliente}"/>
-                     <h:outputLabel value="DUI:" />
-                     <h:outputText value="#{frmFactura.registro.dui}"/>
-                     <h:outputLabel value="Fecha:" />
-                     <h:outputText value="#{frmFactura.registro.fecha}"/>
-                     <h:outputLabel value="Comentarios:" />
-                     <h:outputText value="#{frmFactura.registro.comentarios}"/>
+                     <p:outputLabel value="ID:" />
+                     <p:inputText value="#{frmFactura.registro.idFactura}" readonly="true"/>
+                     <p:outputLabel value="Cliente:" />
+                     <p:inputText value="#{frmFactura.registro.cliente}" readonly="true"/>
+                     <p:outputLabel value="DUI:" />
+                     <p:inputText value="#{frmFactura.registro.dui}"/>
+                     <p:outputLabel value="Fecha:" />
+                     <p:inputText value="#{frmFactura.registro.fecha}" readonly="true"/>
+                     <p:outputLabel value="Comentarios:" />
+                     <p:inputText value="#{frmFactura.registro.comentarios}" readonly="true"/>
                   </h:panelGrid>
                </p:tab>
                <p:tab title="Detalles de Factura">

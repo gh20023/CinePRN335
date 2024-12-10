@@ -63,9 +63,7 @@ public class FrmCarrito implements Serializable {
                 factura.setDui(clienteDui);
                 factura.setFecha(OffsetDateTime.now());
                 factura.setComentarios("CREADA CON ÉXITO");
-
                 facturaBean.create(factura);
-
                 // Crear y persistir detalles de factura
                 for (Producto producto : carrito) {
                     FacturaDetalleProducto detalle = new FacturaDetalleProducto();
@@ -81,7 +79,7 @@ public class FrmCarrito implements Serializable {
             fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo realizar la compra." + e.getMessage()));
         }
     }
-
+    //Getters y setters
     public String getClienteNombre() {
         return clienteNombre;
     }

@@ -25,6 +25,8 @@ public class FrmCarrito implements Serializable {
     FacturaBean facturaBean;
     @Inject
     FacturaDetalleProductoBean facturaDetalleProductoBean;
+    @Inject
+    FacesContext fc;
 
     private String clienteNombre;
     private String clienteDui;
@@ -52,26 +54,31 @@ public class FrmCarrito implements Serializable {
     //Metodo para realizar la compra
     public void realizarCompra(){
         try {
-            // Crear y persistir una nueva factura
-            Factura factura = new Factura();
-            factura.setCliente(clienteNombre);
-            factura.setDui(clienteDui);
-            factura.setFecha(OffsetDateTime.now());
+            if(carrito.isEmpty()){
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No se puede realizar la compra.", "El carrito de compras está vacío."));
+            }else {
+                // Crear y persistir una nueva factura
+                Factura factura = new Factura();
+                factura.setCliente(clienteNombre);
+                factura.setDui(clienteDui);
+                factura.setFecha(OffsetDateTime.now());
+                factura.setComentarios("CREADA CON ÉXITO");
 
-            facturaBean.create(factura);
+                facturaBean.create(factura);
 
-            // Crear y persistir detalles de factura
-            for (Producto producto : carrito) {
-                FacturaDetalleProducto detalle = new FacturaDetalleProducto();
-                detalle.setIdFactura(factura);
-                detalle.setIdProducto(producto);
-                detalle.setMonto(BigDecimal.valueOf(producto.getCantidad()));
-                facturaDetalleProductoBean.create(detalle);
+                // Crear y persistir detalles de factura
+                for (Producto producto : carrito) {
+                    FacturaDetalleProducto detalle = new FacturaDetalleProducto();
+                    detalle.setIdFactura(factura);
+                    detalle.setIdProducto(producto);
+                    detalle.setMonto(BigDecimal.valueOf(producto.getCantidad()));
+                    facturaDetalleProductoBean.create(detalle);
+                }
+                limpiarCarrito();
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Compra realizada", "Se ha registrado la compra exitosamente."));
             }
-            limpiarCarrito();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Compra realizada", "Se ha registrado la compra exitosamente."));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo realizar la compra." + e.getMessage()));
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo realizar la compra." + e.getMessage()));
         }
     }
 

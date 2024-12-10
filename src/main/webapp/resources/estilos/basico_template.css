@@ -11,3 +11,6 @@ h1{
     text-align: center;
     color: #ffff;
 }
+#btnVaciar{
+    margin-right: 40px !important;
+}

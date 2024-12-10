@@ -50,12 +50,12 @@
 
                 <!-- Dialogo para mostrar el carrito -->
                 <p:dialog header="Carrito de Compras" widgetVar="dlgCarrito" modal="true"
-                          showEffect="fade" hideEffect="fade" resizable="false">
+                          showEffect="fade" hideEffect="fade" resizable="false" width="800px">
                     <h:form id="frmVerCarrito">
-                        <p:panelGrid>
+                        <p:growl id="growlCarrito" showDetail="true" sticky="false" life="3000"/>
+                        <p:panelGrid columns="2" >
                             <p:outputLabel for="nombre" value="Nombre: " />
                             <p:inputText id="nombre" value="#{frmCarrito.clienteNombre}"/>
-
                             <p:outputLabel for="dui" value="DUI: " />
                             <p:inputText id="dui" value="#{frmCarrito.clienteDui}"/>
                         </p:panelGrid>
@@ -72,16 +72,16 @@
                             <p:column headerText="Acciones">
                                 <p:commandButton value="Quitar"
                                                  actionListener="#{frmCarrito.quitarDelCarrito(item)}"
-                                                 update=":frmVerCarrito"/>
+                                                 update=":growlCarrito, :frmVerCarrito"/>
                             </p:column>
                         </p:dataTable>
-                        <p:panelGrid>
-                            <p:commandButton value="Vaciar Carrito"
+                        <p:panelGrid columns="4">
+                            <p:commandButton id="btnVaciar" value="Vaciar Carrito"
                                              actionListener="#{frmCarrito.limpiarCarrito}"
-                                             update=":frmVerCarrito"/>
+                                             update=":growlCarrito, :frmVerCarrito"/>
                             <p:commandButton value="Realizar Compra"
                                              actionListener="#{frmCarrito.realizarCompra()}"
-                                             update=":frmVerCarrito"/>
+                                             update=":growlCarrito, :frmVerCarrito"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>

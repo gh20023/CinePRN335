@@ -1,6 +1,8 @@
 package sv.edu.ues.occ.ingenieria.prn335_2024.cine.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
@@ -16,10 +18,13 @@ public class Factura implements Serializable {
 
     @Size(max = 255)
     @Column(name = "cliente")
+    @NotBlank
     private String cliente;
 
     @Size(max = 155)
     @Column(name = "dui", length = 155)
+    @NotBlank
+    @Pattern(regexp = "^\\d{8}-\\d$" , message = "Ingrese un DUI valido.")
     private String dui;
 
     @Column(name = "fecha")

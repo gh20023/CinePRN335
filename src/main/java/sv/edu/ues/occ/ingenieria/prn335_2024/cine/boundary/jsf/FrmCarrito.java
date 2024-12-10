@@ -55,7 +55,7 @@ public class FrmCarrito implements Serializable {
     public void realizarCompra(){
         try {
             if(carrito.isEmpty()){
-                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No se puede realizar la compra.", "El carrito de compras está vacío."));
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se puede realizar la compra.", "El carrito de compras está vacío."));
             }else {
                 // Crear y persistir una nueva factura
                 Factura factura = new Factura();

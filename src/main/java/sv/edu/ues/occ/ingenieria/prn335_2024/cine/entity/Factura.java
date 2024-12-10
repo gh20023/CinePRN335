@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "factura", schema = "public")
@@ -33,6 +34,9 @@ public class Factura implements Serializable {
     @Lob
     @Column(name = "comentarios")
     private String comentarios;
+
+    @OneToMany(mappedBy = "idFactura", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<FacturaDetalleProducto> facturaDetalleProductoList;
 
     public Factura() {}
 
@@ -80,4 +84,11 @@ public class Factura implements Serializable {
         this.comentarios = comentarios;
     }
 
+    public List<FacturaDetalleProducto> getFacturaDetalleProductoList() {
+        return facturaDetalleProductoList;
+    }
+
+    public void setFacturaDetalleProductoList(List<FacturaDetalleProducto> facturaDetalleProductoList) {
+        this.facturaDetalleProductoList = facturaDetalleProductoList;
+    }
 }

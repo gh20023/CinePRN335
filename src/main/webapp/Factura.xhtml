@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f:composition xmlns="http://www.w3.org/1999/xhtml"
+               xmlns:h="jakarta.faces.html"
+               xmlns:f="jakarta.faces.facelets"
+               xmlns:f2="jakarta.faces.core"
+               xmlns:p="http://primefaces.org/ui"
+               xmlns:crud="jakarta.faces.composite/crud"
+               template="WEB-INF/templates/principal.xhtml">
+
+   <f:define name="titulo">
+      #{frmFactura.paginaNombre()}
+   </f:define>
+
+   <f:define name="cuerpo">
+      <h:panelGrid>
+         <h:panelGroup id="pnlTabla">
+            <h:form id="frmTabla">
+               <h:panelGrid>
+                  <p:dataTable value="#{frmFactura.modelo}" var="r"
+                               lazy="true"
+                               paginator="true"
+                               rows="#{frmFactura.registroPorPagina}"
+                               first="0"
+                               selectionMode="single"
+                               selection="#{frmFactura.registro}"
+                               rendered="#{not empty frmFactura.modelo}">
+                     <p:ajax process="@this" update="@form:pnlDetalle" event="rowSelect" listener="#{frmFactura.selecionarFila}"/>
+                     <p:column headerText="ID">
+                        <h:outputText value="#{r.idFactura}"/>
+                     </p:column>
+                     <p:column headerText="CLIENTE">
+                        <h:outputText value="#{r.cliente}"/>
+                     </p:column>
+                     <p:column headerText="DUI">
+                        <h:outputText value="#{r.dui}"/>
+                     </p:column>
+                     <p:column headerText="FECHA">
+                        <h:outputText value="#{r.fecha}"/>
+                     </p:column>
+                     <p:column headerText="COMENTARIOS">
+                        <h:outputText value="#{r.comentarios}"/>
+                     </p:column>
+                  </p:dataTable>
+               </h:panelGrid>
+            </h:form>
+         </h:panelGroup>
+
+         <h:panelGroup id="pnlDetalle">
+            <!-- TabView para mostrar detalles de la factura seleccionada -->
+            <p:tabView rendered="#{not empty frmFactura.registro and not empty frmFactura.registro.facturaDetalleProductoList}">
+               <p:tab title="Factura">
+                  <h:panelGrid columns="2">
+                     <h:outputLabel value="ID:" />
+                     <h:outputText value="#{frmFactura.registro.idFactura}"/>
+                     <h:outputLabel value="Cliente:" />
+                     <h:outputText value="#{frmFactura.registro.cliente}"/>
+                     <h:outputLabel value="DUI:" />
+                     <h:outputText value="#{frmFactura.registro.dui}"/>
+                     <h:outputLabel value="Fecha:" />
+                     <h:outputText value="#{frmFactura.registro.fecha}"/>
+                     <h:outputLabel value="Comentarios:" />
+                     <h:outputText value="#{frmFactura.registro.comentarios}"/>
+                  </h:panelGrid>
+               </p:tab>
+               <p:tab title="Detalles de Factura">
+                  <p:dataTable value="#{frmFactura.registro.facturaDetalleProductoList}" var="detalle" paginator="true" rows="10">
+                     <p:column headerText="ID Factura Detalla">
+                        <h:outputText value="#{detalle.idFacturaDetalleProducto}" />
+                     </p:column>
+                     <p:column headerText="ID Factura">
+                        <h:outputText value="#{detalle.idFactura.idFactura}" />
+                     </p:column>
+                     <p:column headerText="ID Producto">
+                        <h:outputText value="#{detalle.idProducto.idProducto}" />
+                     </p:column>
+                     <p:column headerText="Monto">
+                        <h:outputText value="#{detalle.monto}" />
+                     </p:column>
+                  </p:dataTable>
+               </p:tab>
+            </p:tabView>
+         </h:panelGroup>
+      </h:panelGrid>
+   </f:define>
+</f:composition>

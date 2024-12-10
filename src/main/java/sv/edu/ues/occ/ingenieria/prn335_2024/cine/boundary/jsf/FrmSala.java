@@ -91,7 +91,7 @@ public class FrmSala extends AbstractFrm<Sala> implements Serializable {
     @Override
     public void selecionarFila(SelectEvent<Sala> event) {
         Sala filaSelelcted = event.getObject();
-        FacesMessage mensaje = new FacesMessage("Tipo de pago selecionado co exito");
+        FacesMessage mensaje = new FacesMessage("Tipo de pago selecionado con exito");
         fc.addMessage(null, mensaje);
         this.registro = filaSelelcted;
         this.estado = ESTADO_CRUD.MODIFICAR;
